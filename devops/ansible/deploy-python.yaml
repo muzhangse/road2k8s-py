@@ -63,16 +63,15 @@
     with_items:
       - /etc/nginx/sites-enabled/default
       - /etc/nginx/sites-available/default
-
-handlers:
-  - name: reload supervisor
-    command: "{{ item }}"
-    with_items:
-      - supervisorctl reread
-      - supervisorctl update
-      - supervisorctl restart roadtok8s-py
-    notify: restart nginx
-  - name: restart nginx
-    systemd:
-      name: nginx
-      state: restarted
+  handlers:
+    - name: reload supervisor
+      command: "{{ item }}"
+      with_items:
+        - supervisorctl reread
+        - supervisorctl update
+        - supervisorctl restart roadtok8s-py
+      notify: restart nginx
+    - name: restart nginx
+      systemd:
+        name: nginx
+        state: restarted
